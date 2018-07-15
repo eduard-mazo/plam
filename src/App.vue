@@ -2,24 +2,43 @@
   #app
     img(src='./assets/logo.png')
     h1 PalM
+    button(@onclick="jsons") hola
     ul
-      li(v-for="artist in artists") {{artist.name}}
+      artist(v-for="artist in artists" :artist="artist" :key='artist.id')
 </template>
 
 <script>
+import Artist from "./components/Artist.vue";
 import getArtist from "./api/index.js";
+import getCurrency from "./api/index2.js";
+import json from "./api/names.json";
+
 export default {
   name: "app",
   data() {
     return {
-      artists: []
+      artists: [],
+      names: []
     };
+  },
+  methods: {
+    jsons: function() {
+     console.log('hola');
+     
+     // json.forEach(element => {});
+    }
+  },
+  components: {
+    Artist: Artist
   },
   mounted: function() {
     const self = this;
-    getArtist().then(artist => {
+    getCurrency().then(artist => {
       self.artists = artist;
     });
+    // getArtist().then(artist => {
+    //   self.artists = artist;
+    // });
   }
 };
 </script>
