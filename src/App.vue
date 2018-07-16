@@ -1,6 +1,6 @@
 <template lang='pug'>
   #app
-    img(src='https://eduard-mazo.github.io/plam/dist/logo.png')
+    img(src='./assets/logo.png')
     h1 PalM
     select(v-model="selCountry")
       option(v-for="name in names" v-bind:value="name.name" :key='name.id') {{name.id}}
