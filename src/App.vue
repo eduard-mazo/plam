@@ -2,9 +2,11 @@
   #app
     img(src='./assets/logo.png')
     h1 PalM
-    button(@onclick="jsons") hola
+    select(v-model="selCountry")
+      option(v-for="name in names" v-bind:value="name.name" :key='name.id') {{name.id}}
+    button(@click="jsons") hola
     ul
-      artist(v-for="artist in artists" :artist="artist" :key='artist.id')
+      artist(v-for="artist in artists" :artist="artist" :key='artist.mbid')
 </template>
 
 <script>
@@ -18,27 +20,36 @@ export default {
   data() {
     return {
       artists: [],
-      names: []
+      names: [],
+      selCountry: "spain"
     };
   },
   methods: {
-    jsons: function() {
-     console.log('hola');
-     
-     // json.forEach(element => {});
+    jsons() {},
+    refreshArtist() {
+      const self = this;
+      getArtist(this.selCountry).then(artist => {
+        self.artists = artist;
+      });
     }
   },
   components: {
     Artist: Artist
   },
-  mounted: function() {
+  mounted() {
     const self = this;
-    getCurrency().then(artist => {
-      self.artists = artist;
-    });
-    // getArtist().then(artist => {
+    this.refreshArtist();
+    // getCurrency().then(artist => {
     //   self.artists = artist;
     // });
+    json.names.forEach(element => {
+      self.names.push(element);
+    });
+  },
+  watch: {
+    selCountry() {
+      this.refreshArtist();
+    }
   }
 };
 </script>

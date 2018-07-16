@@ -1,8 +1,8 @@
 <template lang='pug'>
 li 
-    // h2: a(:href="artist.url" target="_blank") {{ artist.name }}
-    h2 {{ artist.name }}
-    //img(:src="artist.image[3]['#text']")
+    h2: a(:href="artist.url" target="_blank") {{ artist.name }}
+    // h2 {{ artist.name }}
+    img(:src="artist.image[3]['#text']")
 </template>
 
 <script>
