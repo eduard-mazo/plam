@@ -5,6 +5,7 @@
     select(v-model="selCountry")
       option(v-for="name in names" v-bind:value="name.name" :key='name.id') {{name.id}}
     button(@click="jsons") hola
+    spinner(v-show='loading')
     ul
       artist(v-for="artist in artists" :artist="artist" :key='artist.mbid')
 </template>
@@ -14,6 +15,7 @@ import Artist from "./components/Artist.vue";
 import getArtist from "./api/index.js";
 import getCurrency from "./api/index2.js";
 import json from "./api/names.json";
+import Spinner from "./components/Spinner.vue";
 
 export default {
   name: "app",
@@ -21,20 +23,25 @@ export default {
     return {
       artists: [],
       names: [],
-      selCountry: "spain"
+      selCountry: "spain",
+      loading: true
     };
   },
   methods: {
     jsons() {},
     refreshArtist() {
       const self = this;
+      this.loading = true;
+      this.artists = [];
       getArtist(this.selCountry).then(artist => {
         self.artists = artist;
+        self.loading = false;
       });
     }
   },
   components: {
-    Artist: Artist
+    Artist: Artist,
+    Spinner: Spinner
   },
   mounted() {
     const self = this;
